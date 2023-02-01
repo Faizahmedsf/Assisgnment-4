@@ -1,0 +1,60 @@
+[
+            {
+                "id": "1",
+                "first_name": "faiz",
+                "DOB": "08/06/2003",
+                "middle_name": "ahmed",
+                "last_name": "choudhary",
+                "email": "faiz@mail.com",
+                "phone_number": "8878-86876",
+                "role": "userRole.Admin",
+                "address": "Mumbai"
+            },
+            {
+                "id": "2",
+                "first_name": "Zain",
+                "DOB": "22/33/2043",
+                "middle_name": "New",
+                "last_name": "Malik",
+                "email": "malik@mail.com",
+                "phone_number": "12321-9887",
+                "role": "userRole.Subscriber",
+                "address": "Delhi"
+            },
+            {
+                "id": "3",
+                "first_name": "React",
+                "DOB": "40/02/2098",
+                "middle_name": "JS",
+                "last_name": "Native",
+                "email": "react@mail.com",
+                "phone_number": "0987-564321",
+                "role": "userRole.SuperAdmin",
+                "address": "USA"
+            },
+            {
+                "id": "4",
+                "first_name": "Zain",
+                "DOB": "56/96/3003",
+                "middle_name": "New",
+                "last_name": "Malik",
+                "email": "malik@mail.com",
+                "phone_number": "12321-9887",
+                "role": "userRole.Admin",
+                "address": "Delhi"
+
+
+            },
+            {
+                "id": "5",
+                "first_name": "React",
+                "DOB": "12/89/0903",
+                "middle_name": "JS",
+                "last_name": "Native",
+                "email": "react@mail.com",
+                "phone_number": "0987-564321",
+                "role": "userRole.SuperAdmin",
+                "address": "USA"
+            }
+        ]
+    

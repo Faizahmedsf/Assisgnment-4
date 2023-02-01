@@ -1,0 +1,77 @@
+API:
+	APIs are mechanisms that enable two software components to communicate with each other using a set of definitions and protocols
+
+Get:
+	The HTTP GET method is used to read (or retrieve) a representation of a resource. In the safe path,
+	 GET returns a representation in XML or JSON and an HTTP response code of 200 (OK).
+
+Post:
+	 The POST verb is most often utilized to create new resources. In particular, it’s used to create subordinate resources.
+	 That is, subordinate to some other (e.g. parent) resource. 
+
+Put:
+	PUT is a method of modifying resource where the client sends data that updates the entire resource . 
+
+
+Patch:
+	patch is used to modify a field it means the whole field is not modified only a single field is modified.
+	PATCH is a method of modifying resources where the client sends partial data that is to be updated without modifying the entire data.
+
+
+
+Delete:
+	It is used to delete a resource identified by a URI.
+
+Http Status response code:
+
+	Informational responses (100 – 199)
+	Successful responses (200 – 299)
+	Redirection messages (300 – 399)
+	Client error responses (400 – 499)
+	Server error responses (500 – 599)
+
+
+Request headers contain more information about the resource to be fetched, or about the client requesting the resource.
+Response headers hold additional information about the response, like its location or about the server providing it.
+
+
+
+Node Js:
+
+	Modules:
+
+	Node.js has a set of built-in modules which you can use without any further installation.
+	var http = require('http');
+
+	File System:
+	
+	Node.js file system module allows you to work with the file system on your computer.
+	To include the File System module, use the require() method:
+	
+	var fs = require('fs');
+	Common Use for the fs module
+	Read files
+	Create files
+	Update files
+	Delete files
+	Rename files
+
+	URL Module:
+	The URL module splits up a web address into readable parts.
+	
+	Event Module:
+	Node.js has a built-in module, called "Events", where you can create-, fire-, and listen for- your own events.
+
+	var events = require('events');
+	var eventEmitter = new events.EventEmitter();
+
+	//Create an event handler:
+	var myEventHandler = function () {
+	  console.log('I hear a scream!');
+	}
+
+	//Assign the event handler to an event:
+	eventEmitter.on('scream', myEventHandler);
+
+	//Fire the 'scream' event:
+	eventEmitter.emit('scream');

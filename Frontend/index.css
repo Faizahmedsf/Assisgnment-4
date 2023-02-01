@@ -1,0 +1,38 @@
+*{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+table {
+    border: 2px solid black;
+    border-collapse: collapse;
+    margin: auto;
+    width: 80vw;
+}
+
+th , td, tr {
+    border: 2px solid black;
+    padding: .5rem 1rem;
+}
+
+.heading{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+a{
+    color: inherit !important;
+}
+form {
+    margin: auto !important;
+    width: 35vw;
+}
+
+.heading{
+    margin: 3rem;
+}
+
+.btn-info , .btn-primary ,.btn-success, .btn-danger{
+    width: 100%;
+    margin: .5rem 0rem  0rem 0rem !important;
+
+}

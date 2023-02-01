@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <script>
+      
+    </script>
+    <div class="heading">
+        <h1 class="text-center">Create a User</h1>
+        <div>
+            <h1>Date Time:</h1>
+            <span id="dateandtime"></span>
+        </div>
+        <button class="btn btn-dark"> <a href="index.html">Back</a></button>
+    </div>
+
+    <form class="container my-3" onsubmit="createUser(event)">
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputEmail4">id</label>
+                <input type="text" class="form-control" required name='id' value="" onchange="getvalue(event)" id="inputEmail4"
+                    placeholder="99">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputPassword4">First Name</label>
+                <input type="text" class="form-control" required name='fName' value="" onchange="getvalue(event)"
+                    id="inputPassword4" placeholder="John">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputAddress">DOB</label>
+                <input type="text" class="form-control" required name='dob' value="" onchange="getvalue(event)" id="inputAddress"
+                    placeholder="16/1/2023">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputAddress2">Middle Name</label>
+                <input type="text" class="form-control" required name='mName' value="" onchange="getvalue(event)"
+                    id="inputAddress2" placeholder="Jane">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="inputCity">lastName</label>
+                <input type="text" class="form-control" required name='lName' value="" onchange="getvalue(event)" id="inputCity"
+                    placeholder="Doe">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="inputZip">email</label>
+                <input type="text" class="form-control" required name='email' value="" onchange="getvalue(event)" id="inputZip"
+                    placeholder="johndoe@sf.com">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputCity">Phone</label>
+                <input type="text" class="form-control" required name='phone' value="" onchange="getvalue(event)" id="inputCity"
+                    placeholder="123-456-7890">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputState">Role</label>
+                <select id="inputState" class="form-control" required name='role' value="" onchange="getvalue(event)">
+                    <option selected>Choose...</option>
+                    <option>Super Admin</option>
+                    <option>Admin</option>
+                    <option>Subscriber</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputZip">Adress</label>
+                <input type="text" name='address' required value="" onchange="getvalue(event)" class="form-control"
+                    id="inputZip" placeholder="Los Angeles">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Create User</button>
+    </form>
+
+    <script type="module" src="Frontend.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
