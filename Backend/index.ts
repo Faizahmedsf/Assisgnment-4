@@ -2,18 +2,19 @@ import express , {Request , Response} from 'express';
 import dotenv from 'dotenv';
 import indexRouter from './Router/Router.js';
 import cors from 'cors';
-// import bodyParser  from "body-parser"
+import './Database/dbconfig'
+import bodyParser  from 'body-parser';
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT;
+const port = process.env.WEBPORT;
 
 app.use(cors({
   origin: '*'
 }));
-
+ 
 app.use(express.json())
-// app.use(bodyParser.urlencoded({ extended:true }))
+app.use(bodyParser.urlencoded({ extended:true }))
 
 
 app.get('/', (req:Request, res:Response) => {

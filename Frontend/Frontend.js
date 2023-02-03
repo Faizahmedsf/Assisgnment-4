@@ -271,6 +271,37 @@ const newclear = () => {
         }
     }
 };
+const newsave = () => {
+    let newRow = document.getElementById('newrow');
+    newRow.style.backgroundColor = '#fff';
+    console.log(newRow);
+    // newRow.children.setAttribut
+    for (let i = 0; i < 9; i++) {
+        newRow.querySelectorAll('.tcell')[i].setAttribute('contenteditable', 'false');
+        let data1 = newRow.children[0].innerHTML;
+        let data2 = newRow.children[1].innerHTML;
+        let data3 = newRow.children[2].innerHTML;
+        let data4 = newRow.children[3].innerHTML;
+        let data5 = newRow.children[4].innerHTML;
+        let data6 = newRow.children[5].innerHTML;
+        let data7 = newRow.children[6].innerHTML;
+        let data8 = newRow.children[7].innerHTML;
+        let data9 = newRow.children[8].innerHTML;
+        // ab[] = value;
+        let a = {
+            "id": data1,
+            "fName": data2,
+            "dob": data3,
+            "mName": data4,
+            "lName": data5,
+            "email": data6,
+            "phone": data7,
+            "role": data8,
+            "address": data9
+        };
+        localStorage.setItem('ab', JSON.stringify(a));
+    }
+};
 class crud {
     addData(data, newvalue) {
         console.log('add data called');
@@ -313,7 +344,7 @@ class crud {
         savebutton.setAttribute('id', 'save-button');
         savebutton.innerText = 'Save';
         savebutton.classList.add('btn-primary', 'save');
-        savebutton.addEventListener("click", function () { globalsave(trid, tableheader); });
+        savebutton.addEventListener("click", function () { newsave(); });
         savebutton.style.display = 'none';
         // clear button
         let clearbutton = document.createElement('button');

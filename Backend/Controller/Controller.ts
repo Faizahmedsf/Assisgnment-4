@@ -1,122 +1,98 @@
 import e, { Request, Response } from 'express';
+import { QueryResult } from 'pg';
 var http = require('http');
 var fs = require('fs');
+import { client } from '../Database/dbconfig'
+import { name , User } from '../interface/interface';
+console.log(name);
 
 // global function for reading json file
 const readFiledata = () => {
-    return new Promise((resolve, reject) => {
-        fs.readFile('./data.json', 'utf8', (error: Error, data:any) => {
-            if (error) {
-                reject(error)
-                return;
+    return new Promise<User[]>((resolve, reject) => {
+
+        // in this we are running a simple select query and getting all the data which are presented in users table
+        client.query('select * from users', (err: Error, result) => {
+            if (err) {
+                reject(err)
             }
             else {
-                const mdata = JSON.parse(data);
-                resolve(mdata);
-                // resolve('data9')
+                resolve(result.rows)
             }
         })
     })
 }
 
-// global function for writing in json file
-const writeFiledata = (data: any[]) => {
-
-    return new Promise((resolve, reject) => {
-        fs.writeFile('./data.json', JSON.stringify(data), function (err: Error, done:any) {
-            if (err) {
-                reject()
-                console.log('write file data failed');
-                
-            }
-            else {
-                // const newDone = JSON.parse(done)
-                resolve(done)
-                console.log('write file data worked fine')
-            }
-        });
-    })
-
-}
-
-// send data using promise
-
 const getdata = async (req: Request, res: Response) => {
-    let userData: any = await readFiledata()
+    let userData:User[] = await readFiledata()
     res.send(userData)
 }
 
-const postdata = (req: Request, res: Response) => {
-    // console.log('req', req.body);
-    const data = {
-        id: req.body.id,
-        first_name: req.body.first_name,
-        DOB: req.body.DOB,
-        middle_name: req.body.middle_name,
-        last_name: req.body.last_name,
-        email: req.body.email,
-        phone_number: req.body.phone_number,
-        role: req.body.role,
-        address: req.body.address
-    };
-    res.send(data);
+const postdata = async (req: Request, res: Response) => {
+
+    const data = [
+        req.body.id,
+        req.body.first_name,
+        req.body.DOB,
+        req.body.middle_name,
+        req.body.last_name,
+        req.body.email,
+        req.body.phone_number,
+        req.body.role,
+        req.body.address
+    ];
+    const temp = `insert into users (id , first_name , dob, middle_name, last_name, email, phone_number, role, address) Values($1 , $2, $3, $4, $5, $6, $7, $8, $9) `;
+
+    client.query(temp, data);
+
+    if (temp) {
+        res.send('Data Added Successfully')
+    }
+    else {
+        res.send('Failed')
+    }
 }
 
-// in patch firstly we are taking an id a params, and creating a var userData in which we are storing content of
-// data.json file and we are comparing and req.param.id with the user id and updating the content
 const patchdata = async (req: Request, res: Response) => {
-    const id = req.param('id');
-    let userData: any = await readFiledata()
+    let uID: any = req.param('id')
 
-    for (let i = 0; i < userData.length; i++) {
-        const singleUser = userData[i];
-        // console.log(singleUser.id);
-        // console.log('id is:', id);
+    const data = [
+        req.body.first_name,
+        req.body.DOB,
+        req.body.middle_name,
+        req.body.last_name,
+        req.body.email,
+        req.body.phone_number,
+        req.body.role,
+        req.body.address,
+        req.param('id')
+    ]
 
-        // res.send(req.body)
-        if (id == singleUser.id) {
-            singleUser.id = req.body.id,
-                singleUser.first_name = req.body.first_name,
-                singleUser.DOB = req.body.DOB,
-                singleUser.middle_name = req.body.middle_name,
-                singleUser.last_name = req.body.last_name,
-                singleUser.email = req.body.email,
-                singleUser.phone_number = req.body.phone_number,
-                singleUser.role = req.body.role,
-                singleUser.address = req.body.address
+    const temp: any = "UPDATE users SET first_name =$1 , dob = $2 , middle_name = $3 , last_name = $4 , email = $5, phone_number = $6,  role = $7 ,  address = $8  where id = $9  RETURNING * ";
 
-            res.send(userData);
-            await writeFiledata(userData)
+    client.query(temp, data)
 
-        }
-
-
+    if (temp) {
+        res.send('Update Successfully')
+    } else {
+        res.send('Update failed')
     }
-
 }
 
 const deletedata = async (req: Request, res: Response) => {
 
-    // first we are reading the data and then after getting all the data in a variable we are using delete and
-    // the value which we are passing in key is removing the data & in postman its showing null on that index
+    const id:string = req.param('id');
+    res.send(id);
 
-    const id = req.param('id');
-    let userData: any = await readFiledata()
-    // res.send(userData[2])
-
-    var key: string = id
-    delete userData[key]
-    res.send(userData)
-
+    const temp = 'DELETE from users where id = $1'
+    await client.query(temp , [id])
 }
 
 // get single user 
 // we are passing an id in header and using that id to get the single user
 const getsingleuser = async (req: Request, res: Response) => {
     let uID: string = req.param('id')
-    // console.log(req.param('id'));
-    let userData: any = await readFiledata()
-    res.send(userData[uID])
+    const t = await client.query("select * from users where id = $1", [uID])
+    res.send(t.rows)
 }
 
 export default { getdata, postdata, patchdata, deletedata, getsingleuser }

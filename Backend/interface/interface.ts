@@ -20,7 +20,7 @@ export enum userRole2 {
 }
 
 
-interface User2{
+export interface User{
             id: string,
             first_name: string,
             DOB: string,
@@ -31,4 +31,6 @@ interface User2{
             role: string,
             address: string
 }
+
+export const name = 'faiz'
 

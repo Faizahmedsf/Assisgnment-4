@@ -14,10 +14,11 @@
 //     {}
 // }
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userRole2 = void 0;
+exports.name = exports.userRole2 = void 0;
 var userRole2;
 (function (userRole2) {
     userRole2["SuperAdmin"] = "SuperAdmin";
     userRole2["Admin"] = "Admin";
     userRole2["Subscriber"] = "Subscriber";
 })(userRole2 = exports.userRole2 || (exports.userRole2 = {}));
+exports.name = 'faiz';

@@ -51,7 +51,7 @@ const getjsondata = async () => {
     // here we are calling the newly created user which is stored in localstorage 
     let x: string | null = localStorage.getItem('ab')
     const create = new crud()
-    create.addData(userData , x)
+    create.addData(userData, x)
 }
 
 
@@ -65,7 +65,7 @@ function jsonformdata() {
     let loadData = document.getElementById('loadData') as HTMLButtonElement;
     loadData.innerText = 'Refresh Data';
 
-     getjsondata();
+    getjsondata();
 }
 
 // edit button functionality
@@ -341,6 +341,43 @@ const newclear = (): void => {
     }
 }
 
+
+const newsave = () => {
+    let newRow = document.getElementById('newrow') as HTMLTableRowElement;
+    newRow.style.backgroundColor = '#fff'
+    console.log(newRow);
+
+    // newRow.children.setAttribut
+    for (let i = 0; i < 9; i++) {
+        newRow.querySelectorAll('.tcell')[i].setAttribute('contenteditable', 'false')
+
+        let data1: string = newRow.children[0].innerHTML
+        let data2: string = newRow.children[1].innerHTML
+        let data3: string = newRow.children[2].innerHTML
+        let data4: string = newRow.children[3].innerHTML
+        let data5: string = newRow.children[4].innerHTML
+        let data6: string = newRow.children[5].innerHTML
+        let data7: string = newRow.children[6].innerHTML
+        let data8: string = newRow.children[7].innerHTML
+        let data9: string = newRow.children[8].innerHTML
+
+        // ab[] = value;
+        let a: any = {
+            "id": data1,
+            "fName": data2,
+            "dob": data3,
+            "mName": data4,
+            "lName": data5,
+            "email": data6,
+            "phone": data7,
+            "role": data8,
+            "address": data9
+        }
+
+        localStorage.setItem('ab', JSON.stringify(a))
+    }
+
+}
 class crud<T> {
 
     addData<T extends User>(data: T[], newvalue: any) {
@@ -393,7 +430,7 @@ class crud<T> {
         savebutton.setAttribute('id', 'save-button');
         savebutton.innerText = 'Save';
         savebutton.classList.add('btn-primary', 'save');
-        savebutton.addEventListener("click", function () { globalsave(trid, tableheader) })
+        savebutton.addEventListener("click", function () { newsave() })
         savebutton.style.display = 'none';
 
         // clear button

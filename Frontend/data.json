@@ -10,6 +10,9 @@
                 "role": "userRole.Admin",
                 "address": "Mumbai"
             },
+
+ 
+
             {
                 "id": "2",
                 "first_name": "Zain",
@@ -42,8 +45,6 @@
                 "phone_number": "12321-9887",
                 "role": "userRole.Admin",
                 "address": "Delhi"
-
-
             },
             {
                 "id": "5",

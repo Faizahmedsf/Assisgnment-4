@@ -11,99 +11,81 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 var http = require('http');
 var fs = require('fs');
+const dbconfig_1 = require("../Database/dbconfig");
+const interface_1 = require("../interface/interface");
+console.log(interface_1.name);
 // global function for reading json file
 const readFiledata = () => {
     return new Promise((resolve, reject) => {
-        fs.readFile('./data.json', 'utf8', (error, data) => {
-            if (error) {
-                reject(error);
-                return;
-            }
-            else {
-                const mdata = JSON.parse(data);
-                resolve(mdata);
-                // resolve('data9')
-            }
-        });
-    });
-};
-// global function for writing in json file
-const writeFiledata = (data) => {
-    return new Promise((resolve, reject) => {
-        fs.writeFile('./data.json', JSON.stringify(data), function (err, done) {
+        // in this we are running a simple select query and getting all the data which are presented in users table
+        dbconfig_1.client.query('select * from users', (err, result) => {
             if (err) {
-                reject();
-                console.log('write file data failed');
+                reject(err);
             }
             else {
-                // const newDone = JSON.parse(done)
-                resolve(done);
-                console.log('write file data worked fine');
+                resolve(result.rows);
             }
         });
     });
 };
-// send data using promise
 const getdata = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let userData = yield readFiledata();
     res.send(userData);
 });
-const postdata = (req, res) => {
-    // console.log('req', req.body);
-    const data = {
-        id: req.body.id,
-        first_name: req.body.first_name,
-        DOB: req.body.DOB,
-        middle_name: req.body.middle_name,
-        last_name: req.body.last_name,
-        email: req.body.email,
-        phone_number: req.body.phone_number,
-        role: req.body.role,
-        address: req.body.address
-    };
-    res.send(data);
-};
-// in patch firstly we are taking an id a params, and creating a var userData in which we are storing content of
-// data.json file and we are comparing and req.param.id with the user id and updating the content
+const postdata = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = [
+        req.body.id,
+        req.body.first_name,
+        req.body.DOB,
+        req.body.middle_name,
+        req.body.last_name,
+        req.body.email,
+        req.body.phone_number,
+        req.body.role,
+        req.body.address
+    ];
+    const temp = `insert into users (id , first_name , dob, middle_name, last_name, email, phone_number, role, address) Values($1 , $2, $3, $4, $5, $6, $7, $8, $9) `;
+    dbconfig_1.client.query(temp, data);
+    if (temp) {
+        res.send('Data Added Successfully');
+    }
+    else {
+        res.send('Failed');
+    }
+});
 const patchdata = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.param('id');
-    let userData = yield readFiledata();
-    for (let i = 0; i < userData.length; i++) {
-        const singleUser = userData[i];
-        // console.log(singleUser.id);
-        // console.log('id is:', id);
-        // res.send(req.body)
-        if (id == singleUser.id) {
-            singleUser.id = req.body.id,
-                singleUser.first_name = req.body.first_name,
-                singleUser.DOB = req.body.DOB,
-                singleUser.middle_name = req.body.middle_name,
-                singleUser.last_name = req.body.last_name,
-                singleUser.email = req.body.email,
-                singleUser.phone_number = req.body.phone_number,
-                singleUser.role = req.body.role,
-                singleUser.address = req.body.address;
-            res.send(userData);
-            yield writeFiledata(userData);
-        }
+    let uID = req.param('id');
+    const data = [
+        req.body.first_name,
+        req.body.DOB,
+        req.body.middle_name,
+        req.body.last_name,
+        req.body.email,
+        req.body.phone_number,
+        req.body.role,
+        req.body.address,
+        req.param('id')
+    ];
+    const temp = "UPDATE users SET first_name =$1 , dob = $2 , middle_name = $3 , last_name = $4 , email = $5, phone_number = $6,  role = $7 ,  address = $8  where id = $9  RETURNING * ";
+    dbconfig_1.client.query(temp, data);
+    if (temp) {
+        res.send('Update Successfully');
+    }
+    else {
+        res.send('Update failed');
     }
 });
 const deletedata = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // first we are reading the data and then after getting all the data in a variable we are using delete and
-    // the value which we are passing in key is removing the data & in postman its showing null on that index
     const id = req.param('id');
-    let userData = yield readFiledata();
-    // res.send(userData[2])
-    var key = id;
-    delete userData[key];
-    res.send(userData);
+    res.send(id);
+    const temp = 'DELETE from users where id = $1';
+    yield dbconfig_1.client.query(temp, [id]);
 });
 // get single user 
 // we are passing an id in header and using that id to get the single user
 const getsingleuser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let uID = req.param('id');
-    // console.log(req.param('id'));
-    let userData = yield readFiledata();
-    res.send(userData[uID]);
+    const t = yield dbconfig_1.client.query("select * from users where id = $1", [uID]);
+    res.send(t.rows);
 });
 exports.default = { getdata, postdata, patchdata, deletedata, getsingleuser };
