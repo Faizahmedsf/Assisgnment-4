@@ -18,7 +18,7 @@ console.log(interface_1.name);
 const readFiledata = () => {
     return new Promise((resolve, reject) => {
         // in this we are running a simple select query and getting all the data which are presented in users table
-        dbconfig_1.client.query('select * from users', (err, result) => {
+        dbconfig_1.client.query('select * from users order by id ASC', (err, result) => {
             if (err) {
                 reject(err);
             }

@@ -11,7 +11,7 @@ const readFiledata = () => {
     return new Promise<User[]>((resolve, reject) => {
 
         // in this we are running a simple select query and getting all the data which are presented in users table
-        client.query('select * from users', (err: Error, result) => {
+        client.query('select * from users order by id ASC', (err: Error, result) => {
             if (err) {
                 reject(err)
             }

@@ -17,24 +17,17 @@ var userRole;
     userRole["Subscriber"] = "Subscriber";
 })(userRole || (userRole = {}));
 // fetching the data from data.json for user data
-const newp = new Promise((resolve, reject) => {
-    const res = fetch('./data.json');
-    if (res) {
-        console.log('res', res);
-        resolve(res);
-    }
-    reject(new Error);
+// const n = async () => {
+const newp = fetch('http://localhost:8001/getdata', {
+    method: 'GET'
 }).then((response) => response.json())
     .then(data => { return data; });
+// }
 const getjsondata = () => __awaiter(void 0, void 0, void 0, function* () {
     let userData = yield newp;
     // we are creating a table instance and passing the data from .json file
     const newTable = new Table(userData);
     newTable.getdata(userData);
-    // here we are calling the newly created user which is stored in localstorage 
-    let x = localStorage.getItem('ab');
-    const create = new crud();
-    create.addData(userData, x);
 });
 // calling the function on onclick event load data
 function jsonformdata() {
@@ -233,130 +226,19 @@ const getvalue = (val) => {
     console.log(Object.assign(Object.assign({}, ab), { [name]: value }));
     ab[name] = value;
 };
-const createUser = (e) => {
+const createUser = (e) => __awaiter(void 0, void 0, void 0, function* () {
     e.preventDefault();
     console.log('ab', ab);
-    localStorage.setItem('ab', JSON.stringify(ab));
-    window.location.href = 'index.html';
-};
-// clear button functionality
-const newclear = () => {
-    console.log('new clear');
-    let x = localStorage.getItem('ab');
-    let newx = JSON.parse(x);
-    console.log('x.length');
-    console.log('newx', newx);
-    let newrow = document.getElementById('newrow');
-    newrow.children[0].innerHTML = newx.id;
-    newrow.children[1].innerHTML = newx.fName;
-    newrow.children[2].innerHTML = newx.dob;
-    newrow.children[3].innerHTML = newx.mName;
-    newrow.children[4].innerHTML = newx.lName;
-    newrow.children[5].innerHTML = newx.email;
-    newrow.children[6].innerHTML = newx.phone;
-    newrow.children[7].innerHTML = newx.role;
-    newrow.children[8].innerHTML = newx.address;
-    newrow.style.backgroundColor = '#fff';
-    for (let i = 0; i < newrow.children.length - 1; i++) {
-        newrow.children[i].setAttribute('contenteditable', 'false');
-    }
-    // lets toggle buttons
-    for (let j = 0; j < newrow.querySelector('#savecleartd').children.length; j++) {
-        console.log(newrow.querySelector('#savecleartd').children[j]);
-        if (newrow.querySelector('#savecleartd').children[j].style.display === 'none') {
-            newrow.querySelector('#savecleartd').children[j].style.display = 'block';
-        }
-        else {
-            newrow.querySelector('#savecleartd').children[j].style.display = 'none';
-        }
-    }
-};
-const newsave = () => {
-    let newRow = document.getElementById('newrow');
-    newRow.style.backgroundColor = '#fff';
-    console.log(newRow);
-    // newRow.children.setAttribut
-    for (let i = 0; i < 9; i++) {
-        newRow.querySelectorAll('.tcell')[i].setAttribute('contenteditable', 'false');
-        let data1 = newRow.children[0].innerHTML;
-        let data2 = newRow.children[1].innerHTML;
-        let data3 = newRow.children[2].innerHTML;
-        let data4 = newRow.children[3].innerHTML;
-        let data5 = newRow.children[4].innerHTML;
-        let data6 = newRow.children[5].innerHTML;
-        let data7 = newRow.children[6].innerHTML;
-        let data8 = newRow.children[7].innerHTML;
-        let data9 = newRow.children[8].innerHTML;
-        // ab[] = value;
-        let a = {
-            "id": data1,
-            "fName": data2,
-            "dob": data3,
-            "mName": data4,
-            "lName": data5,
-            "email": data6,
-            "phone": data7,
-            "role": data8,
-            "address": data9
-        };
-        localStorage.setItem('ab', JSON.stringify(a));
-    }
-};
-class crud {
-    addData(data, newvalue) {
-        console.log('add data called');
-        let existingtable = document.querySelector('.table');
-        let newRow = existingtable.insertRow(-1);
-        newRow.setAttribute('id', 'newrow');
-        let trid = 'newrow';
-        const tableheader = newtableheader(data);
-        for (let i = 0; i < tableheader.length; i++) {
-            let newcell = newRow.insertCell(-1);
-            newcell.classList.add('tcell');
-        }
-        newRow.children[0].innerHTML = JSON.parse(newvalue).id;
-        newRow.children[1].innerHTML = JSON.parse(newvalue).fName;
-        newRow.children[2].innerHTML = JSON.parse(newvalue).dob;
-        newRow.children[3].innerHTML = JSON.parse(newvalue).mName;
-        newRow.children[4].innerHTML = JSON.parse(newvalue).lName;
-        newRow.children[5].innerHTML = JSON.parse(newvalue).email;
-        newRow.children[6].innerHTML = JSON.parse(newvalue).phone;
-        newRow.children[7].innerHTML = JSON.parse(newvalue).role;
-        newRow.children[8].innerHTML = JSON.parse(newvalue).address;
-        // now lets create a edit button 
-        let editButton = document.createElement('button');
-        editButton.classList.add('edit-btn', 'btn-info');
-        editButton.innerText = 'Edit';
-        editButton.setAttribute('id', 'editBtn');
-        editButton === null || editButton === void 0 ? void 0 : editButton.addEventListener("click", function () { globaledit(trid, tableheader); });
-        let editcell = newRow.insertCell(-1);
-        editcell.setAttribute('id', 'savecleartd');
-        editcell.append(editButton);
-        //  delete button
-        let deletebtn = document.createElement('button');
-        deletebtn.classList.add("btn-danger", "delete-btn", 'ml-2');
-        deletebtn.innerHTML = 'Delete';
-        deletebtn.addEventListener("click", function () { globaldelete(trid); });
-        deletebtn.setAttribute('id', 'deletebtn');
-        editcell.append(deletebtn);
-        // save button
-        let savebutton = document.createElement('button');
-        savebutton.setAttribute('id', 'save-button');
-        savebutton.innerText = 'Save';
-        savebutton.classList.add('btn-primary', 'save');
-        savebutton.addEventListener("click", function () { newsave(); });
-        savebutton.style.display = 'none';
-        // clear button
-        let clearbutton = document.createElement('button');
-        clearbutton.setAttribute('id', 'clear-button');
-        clearbutton.innerText = 'Clear';
-        clearbutton.classList.add('btn-info', 'clear', 'ml-2');
-        clearbutton.addEventListener("click", function () { newclear(); });
-        clearbutton.style.display = 'none';
-        editcell.append(savebutton);
-        editcell.append(clearbutton);
-    }
-}
+    // localStorage.setItem('ab', JSON.stringify(ab))
+    // window.location.href = 'index.html';
+    const res = yield fetch('http://localhost:8001/postdata', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(ab)
+    });
+});
 // create a  tableheader
 const newtableheader = (hData) => {
     let tableheader = [];
